@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ProTest</string>
+    <string name="title_name">Pro Test</string>
+    <string name="logo">Logo</string>
+    <string name="action_acerca">About Us</string>
+    <string name="action_buscar">Search</string>
+    <string name="action_settings">Options</string>
+    <string name="title_activity_acerca">About Us</string>
+    <string name="acerca_nombre">Name:</string>
+    <string name="acerca_telefono">Phone:</string>
+    <string name="acerca_email">E-mail:</string>
+    <string name="resumen_preguntas">Availables questions:</string>
+    <string name="resumen_categoria">Category available:</string>
+    <string name="resumen_cuestionarios">Questionnaires carried out:</string>
+    <string name="resumen_calificacion">Average rate:</string>
+    <string name="action_preguntas">Questions</string>
+    <string name="title_activity_listado">Questions</string>
+    <string name="listado_informacion">You have not added any questions</string>
+    <string name="listado_boton">Edit</string>
+    <string name="anadir_enunciado">Question</string>
+    <string name="title_activity_anadir">Add</string>
+    <string name="anadir_res_correcta">Correct answer</string>
+    <string name="anadir_res_incorrecta1">Incorrect answer</string>
+    <string name="anadir_res_incorrecta2">Incorrect answer</string>
+    <string name="anadir_res_incorrecta3">Incorrect answer</string>
+    <string name="anadir_boton">Acept</string>
+    <string name="write_permiso_denegado">Permission denied</string>
+    <string name="write_permiso_aceptado">Permission grante</string>
+    <string name="categoria">Category</string>
+</resources>
