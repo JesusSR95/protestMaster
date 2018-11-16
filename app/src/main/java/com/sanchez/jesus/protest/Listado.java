@@ -5,12 +5,19 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Listado extends AppCompatActivity {
+    private ArrayList<Pregunta> lista2;
+
 
     private static final String TAG="activity_splash_screen";
 
@@ -31,7 +38,6 @@ public class Listado extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -45,6 +51,34 @@ public class Listado extends AppCompatActivity {
     protected void onResume() {
         Mylog.d(TAG, "Iniciando OnResume");
         super.onResume();
+        Repositorio.recoger(this);
+        lista2 = Repositorio.getLista();
+        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        if (lista2 != null){
+            TextView informacion = findViewById(R.id.textView);
+            informacion.setVisibility(View.INVISIBLE);
+            Adaptador ad = new Adaptador(lista2);
+            ad.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Acción al pulsar el elemento
+                    int position = recyclerView.getChildAdapterPosition(v);
+                    Toast.makeText(Listado.this, "Posición: " + String.valueOf(position) + " Categoria: " + lista2.get(position).getCategoria() + " Pregunta: " + lista2.get(position).getEnunciado(), Toast.LENGTH_SHORT)
+                            .show();
+                }
+            });
+
+            // Asocia el Adaptador al RecyclerView
+            recyclerView.setAdapter(ad);
+
+            // Muestra el RecyclerView en vertical
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        } else {
+            TextView informacion = findViewById(R.id.textView);
+            informacion.setVisibility(View.VISIBLE);
+        }
+
         Mylog.d(TAG, "Finalizando OnResume");
     }
 

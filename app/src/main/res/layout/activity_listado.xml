@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="71dp"
-            android:layout_marginTop="281dp"
+            android:layout_marginStart="77dp"
+            android:layout_marginTop="314dp"
             android:text="@string/listado_informacion" />
     </RelativeLayout>
 

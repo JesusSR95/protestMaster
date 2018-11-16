@@ -10,8 +10,7 @@ public class PreguntaSQLiteHelper extends SQLiteOpenHelper {
     String sqlCreate = "CREATE TABLE Pregunta (codigo INTEGER PRIMARY KEY AUTOINCREMENT, pregunta TEXT, categoria TEXT, respuestaCorrecta TEXT, respuestaInc1 TEXT, " +
             "respuestaInc2 TEXT, respuestaInc3 TEXT)";
 
-    public PreguntaSQLiteHelper(Context contexto, String pregunta,
-                                CursorFactory factory, int version) {
+    public PreguntaSQLiteHelper(Context contexto, String pregunta, CursorFactory factory, int version) {
         super(contexto, pregunta, factory, version);
     }
 
