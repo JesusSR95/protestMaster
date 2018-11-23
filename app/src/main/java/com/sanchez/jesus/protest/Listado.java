@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +23,8 @@ public class Listado extends AppCompatActivity {
 
 
     private static final String TAG="activity_splash_screen";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class Listado extends AppCompatActivity {
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                        .setAction("Action", null).show();*/
                 Intent intent = new Intent(Listado.this, Anadir.class);
+                intent.putExtra("editar", false );
                 startActivity(intent);
             }
         });
@@ -63,6 +69,20 @@ public class Listado extends AppCompatActivity {
                 public void onClick(View v) {
                     // Acción al pulsar el elemento
                     int position = recyclerView.getChildAdapterPosition(v);
+
+                    Intent it = new Intent(Listado.this, Anadir.class);
+
+                    it.putExtra("codigo", lista2.get(position).getCodigo() );
+                    it.putExtra("enunciado", lista2.get(position).getEnunciado() );
+                    it.putExtra("categoria", lista2.get(position).getCategoria() );
+                    it.putExtra("respuestaCorrecta", lista2.get(position).getPreguntaCorrecta() );
+                    it.putExtra("respuestaIncorrecta1", lista2.get(position).getPreguntaInc1() );
+                    it.putExtra("respuestaIncorrecta2", lista2.get(position).getPreguntaInc2() );
+                    it.putExtra("respuestaIncorrecta3", lista2.get(position).getPreguntaInc3() );
+                    it.putExtra("editar", true );
+
+                    startActivity(it);
+
                     Toast.makeText(Listado.this, "Posición: " + String.valueOf(position) + " Categoria: " + lista2.get(position).getCategoria() + " Pregunta: " + lista2.get(position).getEnunciado(), Toast.LENGTH_SHORT)
                             .show();
                 }

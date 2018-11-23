@@ -15,7 +15,6 @@ private static ArrayList<Pregunta> lista;
 
     public static void recoger (Context myContext){
         lista = new ArrayList<>();
-//ARREGLAR ESTO
         PreguntaSQLiteHelper psdbh = new PreguntaSQLiteHelper(myContext, "DBPregunta.db", null, 1);
 
         SQLiteDatabase db = psdbh.getWritableDatabase();
@@ -62,9 +61,58 @@ private static ArrayList<Pregunta> lista;
             //Cerramos la base de datos
             db.close();
         }
+        }
 
+    public static ArrayList<Pregunta> recuperarPreguntas(Context myContext){
+
+        PreguntaSQLiteHelper DBPregunta = new PreguntaSQLiteHelper(myContext, "DBPregunta.db", null, 1);
+
+        SQLiteDatabase db = DBPregunta.getReadableDatabase();
+
+        ArrayList<Pregunta> listadoPreguntas = new ArrayList<>();
+
+        Cursor c = db.rawQuery(" SELECT * FROM Pregunta", null);
+
+        if(c.moveToFirst()){
+
+            do {
+                int codigo = Integer.parseInt(c.getString(0));
+                String enunciado = c.getString(1);
+                String categoria = c.getString(2);
+                String respCorrecta = c.getString(3);
+                String respInc1 = c.getString(4);
+                String respInc2 = c.getString(5);
+                String respInc3 = c.getString(6);
+
+                Pregunta preguntaRecogida = new Pregunta(codigo, enunciado, categoria, respCorrecta, respInc1, respInc2, respInc3);
+
+                listadoPreguntas.add(preguntaRecogida);
+
+            } while(c.moveToNext());
 
         }
+
+        //Cerramos la base de datos
+        db.close();
+
+        return listadoPreguntas;
+    }
+
+
+    public static void editarpregu(Context myContext, Pregunta pregunta){
+        PreguntaSQLiteHelper psdbh = new PreguntaSQLiteHelper(myContext, "DBPregunta.db", null, 1);
+        SQLiteDatabase db = psdbh.getWritableDatabase();
+
+        if (db != null) {
+            //Insertamos los datos en la tabla Usuarios
+
+            db.execSQL("UPDATE Pregunta SET pregunta = " + "'" + pregunta.getEnunciado() + "', categoria = " + "'" + pregunta.getCategoria() + "', respuestaCorrecta = " + "'" + pregunta.getPreguntaCorrecta() + "', respuestaInc1 = " + "'" + pregunta.getPreguntaInc1() + "', respuestaInc2 = " + "'" + pregunta.getPreguntaInc2() + "', respuestaInc3 = " + "'" + pregunta.getPreguntaInc3() + "' WHERE codigo = " + pregunta.getCodigo());
+        }
+
+        db.close();
+
+    }
+
 
     public static ArrayList<Pregunta> getLista() {
         return lista;

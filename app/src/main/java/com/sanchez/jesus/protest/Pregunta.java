@@ -88,4 +88,12 @@ public class Pregunta {
     public void setPreguntaInc3(String preguntaInc3) {
         PreguntaInc3 = preguntaInc3;
     }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
 }

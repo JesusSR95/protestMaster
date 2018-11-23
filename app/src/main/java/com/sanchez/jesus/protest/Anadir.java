@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -28,7 +29,8 @@ public class Anadir extends AppCompatActivity {
     EditText edtext1, edtext2, edtext3,  edtext4, edtext5;
     Spinner spinner1;
     Button bt;
-
+    private boolean editar = false;
+    private int codigo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,10 @@ public class Anadir extends AppCompatActivity {
         String[] categoria = {"Montaje y mantenimiento de equipos","Redes locales","Aplicaciones ofimáticas","Sistemas operativos monopuesto","FOL"};
         spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoria));
 
+
+
+
+
         bt = (Button) findViewById(R.id.botonAceptar);
         edtext1 = (EditText) findViewById(R.id.PreguntaeditText);
         edtext2 = (EditText) findViewById(R.id.respuestaCorrecta);
@@ -48,9 +54,20 @@ public class Anadir extends AppCompatActivity {
         edtext4 = (EditText) findViewById(R.id.respuestaIncorrecta2);
         edtext5 = (EditText) findViewById(R.id.respuestaIncorrecta3);
 
+        editar = getIntent().getExtras().getBoolean("editar");
+        codigo = getIntent().getExtras().getInt("codigo");
+        edtext1.setText(getIntent().getExtras().getString("enunciado"));
+        edtext2.setText(getIntent().getExtras().getString("respuestaCorrecta"));
+        edtext3.setText(getIntent().getExtras().getString("respuestaIncorrecta1"));
+        edtext4.setText(getIntent().getExtras().getString("respuestaIncorrecta2"));
+        edtext5.setText(getIntent().getExtras().getString("respuestaIncorrecta3"));
+
+
+
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (edtext1.getText().toString().isEmpty()) {
                     Snackbar.make(v, "Rellenar todos los campos", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -70,8 +87,7 @@ public class Anadir extends AppCompatActivity {
                 }else if(edtext5.getText().toString().isEmpty()){
                     Snackbar.make(v, "Rellenar todos los campos", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                }
-                else{
+                }else{
 
                     myContext = Anadir.this;
                     coordinatorLayout = findViewById(R.id.coordinatorLayout);
@@ -102,11 +118,22 @@ public class Anadir extends AppCompatActivity {
                     });
 
                     //AQUI VA LO DE INSERTAR
-                    Pregunta pregunta = new Pregunta(edtext1.getText().toString(), spinner1.getSelectedItem().toString() , edtext2.getText().toString(), edtext3.getText().toString(), edtext4.getText().toString(), edtext5.getText().toString());
+                    if (editar==false) {
 
-                    Repositorio.insertar(myContext, pregunta);
+                        Pregunta pregunta = new Pregunta(edtext1.getText().toString(), spinner1.getSelectedItem().toString(), edtext2.getText().toString(), edtext3.getText().toString(), edtext4.getText().toString(), edtext5.getText().toString());
 
-                    finish();
+                        Repositorio.insertar(myContext, pregunta);
+
+                        finish();
+                    }else{
+                        Pregunta pregunta = new Pregunta(edtext1.getText().toString(), spinner1.getSelectedItem().toString(), edtext2.getText().toString(), edtext3.getText().toString(), edtext4.getText().toString(), edtext5.getText().toString());
+
+                        pregunta.setCodigo(codigo);
+
+                        Repositorio.editarpregu(myContext, pregunta);
+
+                        finish();
+                    }
                 }
 
             }

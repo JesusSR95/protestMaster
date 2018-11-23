@@ -87,4 +87,5 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.AcontecimientoView
         if(listener != null)
             listener.onClick(view);
     }
+
 }
