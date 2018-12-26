@@ -21,12 +21,11 @@ import java.util.ArrayList;
 
 public class Adaptador extends RecyclerView.Adapter<Adaptador.AcontecimientoViewHolder>
         implements View.OnClickListener {
-
     private ArrayList<Pregunta> items;
     private View.OnClickListener listener;
 
     // Clase interna:
-    // Se implementa el ViewHolder que se encargarÃ¡
+    // Se implementa el ViewHolder que se encargara
     // de almacenar la vista del elemento y sus datos
     public static class AcontecimientoViewHolder
             extends RecyclerView.ViewHolder {
@@ -71,7 +70,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.AcontecimientoView
         viewHolder.AcontecimientoBind(item);
     }
 
-    // Indica el nÃºmero de elementos de la colecciÃ³n de datos.
+    // Indica el numero de elementos de la coleccion de datos.
     @Override
     public int getItemCount() {
         return items.size();
@@ -87,5 +86,6 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.AcontecimientoView
         if(listener != null)
             listener.onClick(view);
     }
+
 
 }

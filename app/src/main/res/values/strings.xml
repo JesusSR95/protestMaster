@@ -30,4 +30,10 @@
     <string name="write_permiso_denegado">Permiso denegado</string>
     <string name="write_permiso_aceptado">Permiso aceptado</string>
     <string name="categoria">Categoria</string>
+    <string name="anadir_categoria">Nueva categoria</string>
+    <string name="anadir_opcion">Añadir nueva opcion</string>
+    <string name="opcion_elegida">Tu opcion</string>
+    <string name="add" >Añadir</string>
+    <string name="cancel" >Cancelar</string>
+    <string name="eliminarPregunta">Esta acción no se puede deshacer, ¿Quiere eliminar?</string>
 </resources>

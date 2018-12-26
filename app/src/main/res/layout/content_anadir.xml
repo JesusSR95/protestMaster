@@ -8,4 +8,8 @@
     tools:context=".Anadir"
     tools:showIn="@layout/activity_anadir">
 
+
+
+
+
 </android.support.constraint.ConstraintLayout>

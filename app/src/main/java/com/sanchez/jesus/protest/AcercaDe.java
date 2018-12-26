@@ -13,6 +13,8 @@ public class AcercaDe extends AppCompatActivity {
 
     private static final String TAG="activity_splash_screen";
 
+    //Muestra la flecha de ir hacia atras.
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

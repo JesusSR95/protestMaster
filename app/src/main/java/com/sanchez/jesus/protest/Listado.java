@@ -1,5 +1,7 @@
 package com.sanchez.jesus.protest;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +36,7 @@ public class Listado extends AppCompatActivity {
         setContentView(R.layout.activity_listado);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.editar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +48,13 @@ public class Listado extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return false;
     }
 
     @Override
@@ -72,14 +83,14 @@ public class Listado extends AppCompatActivity {
 
                     Intent it = new Intent(Listado.this, Anadir.class);
 
-                    it.putExtra("codigo", lista2.get(position).getCodigo() );
-                    it.putExtra("enunciado", lista2.get(position).getEnunciado() );
-                    it.putExtra("categoria", lista2.get(position).getCategoria() );
-                    it.putExtra("respuestaCorrecta", lista2.get(position).getPreguntaCorrecta() );
-                    it.putExtra("respuestaIncorrecta1", lista2.get(position).getPreguntaInc1() );
-                    it.putExtra("respuestaIncorrecta2", lista2.get(position).getPreguntaInc2() );
-                    it.putExtra("respuestaIncorrecta3", lista2.get(position).getPreguntaInc3() );
-                    it.putExtra("editar", true );
+                    it.putExtra(Constantes.CODPREGUNTA, lista2.get(position).getCodigo() );
+                    it.putExtra(Constantes.ENUNCIADO, lista2.get(position).getEnunciado() );
+                    it.putExtra(Constantes.CATEGORIA, lista2.get(position).getCategoria() );
+                    it.putExtra(Constantes.RESPCORRECTA, lista2.get(position).getPreguntaCorrecta() );
+                    it.putExtra(Constantes.RESPINCORRECTA1, lista2.get(position).getPreguntaInc1() );
+                    it.putExtra(Constantes.RESPINCORRECTA2, lista2.get(position).getPreguntaInc2() );
+                    it.putExtra(Constantes.RESPINCORRECTA3, lista2.get(position).getPreguntaInc3() );
+                    it.putExtra(Constantes.EDITAR, true );
 
                     startActivity(it);
 
@@ -90,6 +101,7 @@ public class Listado extends AppCompatActivity {
 
             // Asocia el Adaptador al RecyclerView
             recyclerView.setAdapter(ad);
+
 
             // Muestra el RecyclerView en vertical
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

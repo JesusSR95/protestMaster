@@ -16,7 +16,7 @@ public class Resumen extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_resumen, menu);
         return true;
     }
-
+//Son las opciones que nos muestra en la pantalla resumen (los 3 puntos de arriba derecha)
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_buscar:

@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-
+//Pagina del logo que se muestra durante 4 segundos
 public class SplashScreen extends AppCompatActivity {
     private static final String TAG="activity_splash_screen";
     private static int  TIEMPO = 4000;

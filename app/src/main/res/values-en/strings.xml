@@ -28,4 +28,10 @@
     <string name="write_permiso_denegado">Permission denied</string>
     <string name="write_permiso_aceptado">Permission grante</string>
     <string name="categoria">Category</string>
+    <string name="anadir_categoria">New category</string>
+    <string name="anadir_opcion">add new option</string>
+    <string name="opcion_elegida">Your option</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="eliminarPregunta">Continue?</string>
 </resources>

@@ -3,9 +3,6 @@ package com.sanchez.jesus.protest;
 public class Pregunta {
 
     private int codigo;
-
-
-
     private String enunciado;
     private String categoria;
     private String preguntaCorrecta;

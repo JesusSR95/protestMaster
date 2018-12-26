@@ -22,10 +22,10 @@ public class PreguntaSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int versionAnterior, int versionNueva) {
-        //NOTA: Por simplicidad del ejemplo aquí utilizamos directamente la opción de
-        //      eliminar la tabla anterior y crearla de nuevo vacía con el nuevo formato.
-        //      Sin embargo lo normal será que haya que migrar datos de la tabla antigua
-        //      a la nueva, por lo que este método debería ser más elaborado.
+        //Por simplicidad del ejemplo aquí utilizamos directamente la opción de
+        //eliminar la tabla anterior y crearla de nuevo vacía con el nuevo formato.
+        //Sin embargo lo normal será que haya que migrar datos de la tabla antigua
+        //a la nueva, por lo que este método debería ser más elaborado.
 
         //Se elimina la versión anterior de la tabla
         db.execSQL("DROP TABLE IF EXISTS Pregunta");
