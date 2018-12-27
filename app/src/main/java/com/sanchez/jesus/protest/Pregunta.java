@@ -10,8 +10,8 @@ public class Pregunta {
     private String PreguntaInc2;
     private String PreguntaInc3;
 
-    public Pregunta(int codigo, String enunciado, String categoria, String preguntaCorrecta, String preguntaInc1, String preguntaInc2, String preguntaInc3) {
-        this.codigo = codigo;
+    public Pregunta(String codigo, String enunciado, String categoria, String preguntaCorrecta, String preguntaInc1, String preguntaInc2, String preguntaInc3) {
+        this.codigo = Integer.parseInt(codigo);
         this.enunciado = enunciado;
         this.categoria = categoria;
         this.preguntaCorrecta = preguntaCorrecta;

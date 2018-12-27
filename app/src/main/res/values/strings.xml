@@ -35,5 +35,7 @@
     <string name="opcion_elegida">Tu opcion</string>
     <string name="add" >Añadir</string>
     <string name="cancel" >Cancelar</string>
-    <string name="eliminarPregunta">Esta acción no se puede deshacer, ¿Quiere eliminar?</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="delete">eliminar</string>
+    <string name="eliminarPregunta">¿Estar Seguro?</string>
 </resources>

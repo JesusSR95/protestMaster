@@ -34,4 +34,6 @@
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="eliminarPregunta">Continue?</string>
+    <string name="delete">delete</string>
+    <string name="aceptar">Acept</string>
 </resources>

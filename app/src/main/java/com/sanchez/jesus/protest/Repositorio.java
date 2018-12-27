@@ -34,7 +34,7 @@ public class Repositorio {
         if (c.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
             do {
-                int codigo = c.getInt(c.getColumnIndex("codigo"));
+                String codigo=c.getString( c.getColumnIndex("codigo"));
                 String pregunta = c.getString(c.getColumnIndex("pregunta"));
                 String spinner = c.getString(c.getColumnIndex("categoria"));
                 String respuestacorrecta = c.getString(c.getColumnIndex("respuestaCorrecta"));
@@ -82,7 +82,6 @@ public class Repositorio {
         if (c.moveToFirst()) {
 
             do {
-                int codigo = Integer.parseInt(c.getString(0));
                 String enunciado = c.getString(1);
                 String categoria = c.getString(2);
                 String respCorrecta = c.getString(3);
@@ -90,7 +89,7 @@ public class Repositorio {
                 String respInc2 = c.getString(5);
                 String respInc3 = c.getString(6);
 
-                Pregunta preguntaRecogida = new Pregunta(codigo, enunciado, categoria, respCorrecta, respInc1, respInc2, respInc3);
+                Pregunta preguntaRecogida = new Pregunta(enunciado, categoria, respCorrecta, respInc1, respInc2, respInc3);
 
                 listadoPreguntas.add(preguntaRecogida);
 
