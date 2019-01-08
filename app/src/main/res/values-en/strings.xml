@@ -36,4 +36,6 @@
     <string name="eliminarPregunta">Continue?</string>
     <string name="delete">delete</string>
     <string name="aceptar">Acept</string>
+    <string name="pregunta">Questions:</string>
+    <string name="contarCategorias">Categories</string>
 </resources>

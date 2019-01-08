@@ -38,4 +38,6 @@
     <string name="aceptar">Aceptar</string>
     <string name="delete">eliminar</string>
     <string name="eliminarPregunta">¿Estar Seguro?</string>
+    <string name="pregunta">Preguntas disponibles:</string>
+    <string name="contarCategorias">Categorias disponibles:</string>
 </resources>

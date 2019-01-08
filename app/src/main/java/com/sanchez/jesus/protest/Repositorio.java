@@ -139,6 +139,7 @@ public class Repositorio {
 
     }
 
+
     public static ArrayList<String> getCategorias(){
 
         return categorias;

@@ -1,14 +1,22 @@
 package com.sanchez.jesus.protest;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class Resumen extends AppCompatActivity {
     private static final String TAG="activity_splash_screen";
+    Context myContext;
+    CoordinatorLayout coordinatorLayout;
+    Repositorio repositorio;
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -43,10 +51,11 @@ public class Resumen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Mylog.d(TAG, "Iniciando OnCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resumen);
-        Mylog.d(TAG, "Finalizando OnCreate");
+        myContext = this;
+        coordinatorLayout = findViewById(R.id.coordinatorLayout);
+
 
     }
 
@@ -61,6 +70,11 @@ public class Resumen extends AppCompatActivity {
     protected void onResume() {
         Mylog.d(TAG, "Iniciando OnResume");
         super.onResume();
+        Repositorio.recuperarPreguntas(myContext).size();
+        TextView pregunta = findViewById(R.id.pregunta);
+        pregunta.setText("Hay un total de: " + Repositorio.recuperarPreguntas(myContext).size()+ " preguntas");
+        TextView contarCategoria = findViewById(R.id.contarCategoria);
+        contarCategoria.setText("Hay un total de: " + Repositorio.recuperarPreguntas(myContext).size()+ " categorias");
         Mylog.d(TAG, "Finalizando OnResume");
     }
 
