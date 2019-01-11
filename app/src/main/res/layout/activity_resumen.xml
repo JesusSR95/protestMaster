@@ -24,7 +24,7 @@
             android:textAlignment="center" />
 
         <TextView
-            android:id="@+id/contarCategoria"
+            android:id="@+id/contarCategorias"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="9dp"

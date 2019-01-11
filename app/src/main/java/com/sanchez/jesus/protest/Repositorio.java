@@ -168,6 +168,48 @@ public class Repositorio {
 
     }
 
+    public static String getTotalPregunta(Context myContext) {
+
+        String totalPregunta = "";
+
+        PreguntaSQLiteHelper helper =
+                new PreguntaSQLiteHelper(myContext, Constantes.NOMBREDB, null, 1);
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        Cursor c = db.rawQuery("SELECT count(distinct codigo) FROM '" + Constantes.NOMBRETABLA + "';", null);
+
+
+        if (c.moveToFirst()) {
+            totalPregunta = c.getString(0);
+        }
+
+        c.close();
+
+        return totalPregunta;
+    }
+
+    public static String getTotalCategoria(Context myContext) {
+
+        String totalCategoria = "";
+
+        PreguntaSQLiteHelper helper =
+                new PreguntaSQLiteHelper(myContext, Constantes.NOMBREDB, null, 1);
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        Cursor c = db.rawQuery("SELECT count(distinct categoria) FROM '" + Constantes.NOMBRETABLA + "';", null);
+
+
+        if (c.moveToFirst()) {
+            totalCategoria = c.getString(0);
+        }
+
+        c.close();
+
+        return totalCategoria;
+    }
+
     public static ArrayList<Pregunta> getLista() {
         return lista;
     }

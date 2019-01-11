@@ -16,6 +16,8 @@ public class Resumen extends AppCompatActivity {
     Context myContext;
     CoordinatorLayout coordinatorLayout;
     Repositorio repositorio;
+    private TextView contarCategorias;
+    private TextView pregunta;
 
 
     @Override
@@ -55,14 +57,13 @@ public class Resumen extends AppCompatActivity {
         setContentView(R.layout.activity_resumen);
         myContext = this;
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
-
-
     }
 
     @Override
     protected void onStart() {
         Mylog.d(TAG, "Iniciando OnStart");
         super.onStart();
+
         Mylog.d(TAG, "Finalizando OnStart");
     }
 
@@ -70,11 +71,12 @@ public class Resumen extends AppCompatActivity {
     protected void onResume() {
         Mylog.d(TAG, "Iniciando OnResume");
         super.onResume();
-        Repositorio.recuperarPreguntas(myContext).size();
-        TextView pregunta = findViewById(R.id.pregunta);
-        pregunta.setText("Hay un total de: " + Repositorio.recuperarPreguntas(myContext).size()+ " preguntas");
-        TextView contarCategoria = findViewById(R.id.contarCategoria);
-        contarCategoria.setText("Hay un total de: " + Repositorio.recuperarPreguntas(myContext).size()+ " categorias");
+        pregunta = findViewById(R.id.pregunta);
+        pregunta.setText("Hay un total de " + Repositorio.getTotalPregunta(myContext)+ " preguntas");
+
+        contarCategorias = findViewById(R.id.contarCategorias);
+        contarCategorias.setText("Hay un total de " + Repositorio.getTotalCategoria(myContext)+ " categorias");
+
         Mylog.d(TAG, "Finalizando OnResume");
     }
 
