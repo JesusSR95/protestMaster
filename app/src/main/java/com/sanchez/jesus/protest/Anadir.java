@@ -181,9 +181,10 @@ public class Anadir extends AppCompatActivity {
 
                 //Cuando esten todos los campos rellenados nos mostrará un alert preguntando que si aceptamos los permisos
 
-                    myContext = Anadir.this;
+                    //AQUI ESTABA LOS PERMISOS
+                   /* myContext = Anadir.this;
                     coordinatorLayout = findViewById(R.id.coordinatorLayout);
-                            bt.setOnClickListener(new View.OnClickListener() {
+                    bt.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             int WriteExternalStoragePermission = ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                             Log.d("AnadirActivity", "WRITE_EXTERNAL_STORAGE Permission: " + WriteExternalStoragePermission);
@@ -207,7 +208,7 @@ public class Anadir extends AppCompatActivity {
                             }
 
                         }
-                    });
+                    });*/
 
                     //Hay un if que indica que si el editar es false insertara los datos nuevos.
                     if (editar==false) {

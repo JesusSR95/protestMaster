@@ -1,19 +1,29 @@
 package com.sanchez.jesus.protest;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class Resumen extends AppCompatActivity {
-    private static final String TAG="activity_splash_screen";
-    Context myContext;
+    private static final String TAG="Resumen";
+    final private int CODE_WRITE_EXTERNAL_STORAGE_PERMISSION = 123;
+    private Context myContext;
+    private Button bt;
     CoordinatorLayout coordinatorLayout;
     Repositorio repositorio;
     private TextView contarCategorias;
@@ -56,6 +66,7 @@ public class Resumen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resumen);
         myContext = this;
+        compruebaPermisos();
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
     }
 
@@ -77,6 +88,7 @@ public class Resumen extends AppCompatActivity {
         contarCategorias = findViewById(R.id.contarCategorias);
         contarCategorias.setText("Hay un total de " + Repositorio.getTotalCategoria(myContext)+ " categorias");
 
+        //permisos();
         Mylog.d(TAG, "Finalizando OnResume");
     }
 
@@ -106,5 +118,46 @@ public class Resumen extends AppCompatActivity {
         Mylog.d(TAG, "Iniciando OnDestroy");
         super.onDestroy();
         Mylog.d(TAG, "Finalizando OnDestroy");
+    }
+
+    private void compruebaPermisos() {
+        int WriteExternalStoragePermission = ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        Mylog.d("MainActivity", "WRITE_EXTERNAL_STORAGE Permission: " + WriteExternalStoragePermission);
+
+        if (WriteExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                ActivityCompat.requestPermissions(Resumen.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, CODE_WRITE_EXTERNAL_STORAGE_PERMISSION);
+
+            } else {
+
+                Mylog.e("Permisos: ","Rechazados");
+
+            }
+        } else {
+
+            Mylog.e("Permisos: ","Rechazados");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case CODE_WRITE_EXTERNAL_STORAGE_PERMISSION:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+
+
+                } else {
+
+                    Mylog.e("Permisos: ","Rechazados");
+
+                }
+
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }
