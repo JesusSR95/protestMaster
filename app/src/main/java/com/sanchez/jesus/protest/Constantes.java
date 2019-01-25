@@ -13,4 +13,5 @@ public class Constantes {
     public static final String RESPINCORRECTA1 = "respuestaIncorrecta1";
     public static final String RESPINCORRECTA2 = "respuestaIncorrecta2";
     public static final String RESPINCORRECTA3 = "respuestaIncorrecta3";
+    public static final String PHOTO = "photo";
 }

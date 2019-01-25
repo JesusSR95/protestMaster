@@ -41,8 +41,9 @@ public class Repositorio {
                 String respuestaInc1 = c.getString(c.getColumnIndex("respuestaInc1"));
                 String respuestaInc2 = c.getString(c.getColumnIndex("respuestaInc2"));
                 String respuestaInc3 = c.getString(c.getColumnIndex("respuestaInc3"));
+                String photo = c.getString(c.getColumnIndex("photo"));
 
-                Pregunta p = new Pregunta(codigo, pregunta, spinner, respuestacorrecta, respuestaInc1, respuestaInc2, respuestaInc3);
+                Pregunta p = new Pregunta(codigo, pregunta, spinner, respuestacorrecta, respuestaInc1, respuestaInc2, respuestaInc3, photo);
                 lista.add(p);
             } while (c.moveToNext());
         }
@@ -60,14 +61,40 @@ public class Repositorio {
         if (db != null) {
             //Insertamos los datos en la tabla Usuarios
 
-            db.execSQL("INSERT INTO " + Constantes.NOMBRETABLA + " (pregunta, categoria, respuestaCorrecta, respuestaInc1, respuestaInc2, respuestaInc3) " +
-                    "VALUES ('" + pregunta.getEnunciado() + "', '" + pregunta.getCategoria() + "', '" + pregunta.getPreguntaCorrecta() + "', '" + pregunta.getPreguntaInc1() + "', '" + pregunta.getPreguntaInc2() + "', '" + pregunta.getPreguntaInc3() + "')");
+            db.execSQL("INSERT INTO " + Constantes.NOMBRETABLA + " (pregunta, categoria, respuestaCorrecta, respuestaInc1, respuestaInc2, respuestaInc3, photo) " +
+                    "VALUES ('" + pregunta.getEnunciado() + "', '" + pregunta.getCategoria() + "', '" + pregunta.getPreguntaCorrecta() + "', '" + pregunta.getPreguntaInc1() + "', '" + pregunta.getPreguntaInc2() + "', '" + pregunta.getPreguntaInc3() + pregunta.getPhoto()+"') ");
 
 
             //Cerramos la base de datos
             db.close();
         }
     }
+
+    public static boolean insertarF(Pregunta p, Context myContext) {
+
+        boolean valor = true;
+
+        //Abrimos la base de datos 'DBUsuarios' en modo escritura
+        PreguntaSQLiteHelper psdbh =
+                new PreguntaSQLiteHelper(myContext, Constantes.NOMBREDB, null, 1);
+
+        SQLiteDatabase db = psdbh.getWritableDatabase();
+
+        //Si hemos abierto correctamente la base de datos
+        if (db != null) {
+
+            db.execSQL("INSERT INTO '"+Constantes.NOMBRETABLA+"' (pregunta, categoria, respuestaCorrecta, respuestaInc1, respuestaInc2, respuestaInc3, photo)"+
+                    "VALUES ('" + p.getEnunciado() + "', '" + p.getCategoria() + "', '"+ p.getPreguntaCorrecta()+"', '"+ p.getPreguntaInc1()+"', '"+p.getPreguntaInc2()+"', '"+p.getPreguntaInc3()+"','"+p.getPhoto()+"')");
+
+            //Cerramos la base de datos
+            db.close();
+        } else {
+            valor = false;
+        }
+
+        return valor;
+    }
+
 
     public static ArrayList<Pregunta> recuperarPreguntas(Context myContext) {
 
@@ -88,8 +115,9 @@ public class Repositorio {
                 String respInc1 = c.getString(4);
                 String respInc2 = c.getString(5);
                 String respInc3 = c.getString(6);
+                String foto = c.getString(7);
 
-                Pregunta preguntaRecogida = new Pregunta(enunciado, categoria, respCorrecta, respInc1, respInc2, respInc3);
+                Pregunta preguntaRecogida = new Pregunta(enunciado, categoria, respCorrecta, respInc1, respInc2, respInc3, foto);
 
                 listadoPreguntas.add(preguntaRecogida);
 
@@ -111,7 +139,7 @@ public class Repositorio {
         if (db != null) {
             //Insertamos los datos en la tabla Usuarios
 
-            db.execSQL("UPDATE " + Constantes.NOMBRETABLA + " SET pregunta = " + "'" + pregunta.getEnunciado() + "', categoria = " + "'" + pregunta.getCategoria() + "', respuestaCorrecta = " + "'" + pregunta.getPreguntaCorrecta() + "', respuestaInc1 = " + "'" + pregunta.getPreguntaInc1() + "', respuestaInc2 = " + "'" + pregunta.getPreguntaInc2() + "', respuestaInc3 = " + "'" + pregunta.getPreguntaInc3() + "' WHERE codigo = " + pregunta.getCodigo());
+            db.execSQL("UPDATE " + Constantes.NOMBRETABLA + " SET pregunta = " + "'" + pregunta.getEnunciado() + "', categoria = " + "'" + pregunta.getCategoria() + "', respuestaCorrecta = " + "'" + pregunta.getPreguntaCorrecta() + "', respuestaInc1 = " + "'" + pregunta.getPreguntaInc1() + "', respuestaInc2 = " + "'" + pregunta.getPreguntaInc2() + "', respuestaInc3 = " + "'" + pregunta.getPreguntaInc3() + "', photo = " + "'" + pregunta.getPhoto() + "' WHERE codigo = " + pregunta.getCodigo());
         }
 
         db.close();
@@ -135,10 +163,33 @@ public class Repositorio {
 
             } while (c.moveToNext());
         }
-
-
     }
 
+    public static Pregunta buscarPregunta(int codi, Context myContext){
+
+        Pregunta p = null;
+
+        PreguntaSQLiteHelper helper = new PreguntaSQLiteHelper(myContext, Constantes.NOMBREDB, null, 1);
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        Cursor c = db.rawQuery("SELECT * FROM Pregunta WHERE codigo='"+codi+"'", null);
+
+        if (c.moveToFirst()) {
+            String enunciado = c.getString(1);
+            String categoria = c.getString(2);
+            String respCorrecta = c.getString(3);
+            String respInc1 = c.getString(4);
+            String respInc2 = c.getString(5);
+            String respInc3 = c.getString(6);
+            String foto = c.getString(7);
+            p = new Pregunta(enunciado, categoria, respCorrecta, respInc1, respInc2, respInc3, foto);
+
+
+        }
+    db.close();
+        return p;
+    }
 
     public static ArrayList<String> getCategorias(){
 

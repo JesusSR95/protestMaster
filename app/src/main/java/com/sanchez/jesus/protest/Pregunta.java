@@ -9,8 +9,9 @@ public class Pregunta {
     private String PreguntaInc1;
     private String PreguntaInc2;
     private String PreguntaInc3;
+    private String photo;
 
-    public Pregunta(String codigo, String enunciado, String categoria, String preguntaCorrecta, String preguntaInc1, String preguntaInc2, String preguntaInc3) {
+    public Pregunta(String codigo, String enunciado, String categoria, String preguntaCorrecta, String preguntaInc1, String preguntaInc2, String preguntaInc3, String photo) {
         this.codigo = Integer.parseInt(codigo);
         this.enunciado = enunciado;
         this.categoria = categoria;
@@ -18,6 +19,17 @@ public class Pregunta {
         this.PreguntaInc1 = preguntaInc1;
         this.PreguntaInc2 = preguntaInc2;
         this.PreguntaInc3 = preguntaInc3;
+        this.photo = photo;
+    }
+
+    public Pregunta(String enunciado, String categoria, String preguntaCorrecta, String preguntaInc1, String preguntaInc2, String preguntaInc3, String photo) {
+        this.enunciado = enunciado;
+        this.categoria = categoria;
+        this.preguntaCorrecta = preguntaCorrecta;
+        this.PreguntaInc1 = preguntaInc1;
+        this.PreguntaInc2 = preguntaInc2;
+        this.PreguntaInc3 = preguntaInc3;
+        this.photo = photo;
     }
 
     public Pregunta(String enunciado, String categoria, String preguntaCorrecta, String preguntaInc1, String preguntaInc2, String preguntaInc3) {
@@ -27,6 +39,7 @@ public class Pregunta {
         this.PreguntaInc1 = preguntaInc1;
         this.PreguntaInc2 = preguntaInc2;
         this.PreguntaInc3 = preguntaInc3;
+
     }
 
 
@@ -92,5 +105,13 @@ public class Pregunta {
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo){
+        this.photo=photo;
     }
 }

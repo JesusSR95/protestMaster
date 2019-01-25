@@ -7,8 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class PreguntaSQLiteHelper extends SQLiteOpenHelper {
     //Sentencia SQL para crear la tabla de Usuarios
-    String sqlCreate = "CREATE TABLE Pregunta (codigo INTEGER PRIMARY KEY AUTOINCREMENT, pregunta TEXT, categoria TEXT, respuestaCorrecta TEXT, respuestaInc1 TEXT, " +
-            "respuestaInc2 TEXT, respuestaInc3 TEXT)";
+    String sqlCreate = "CREATE TABLE "+ Constantes.NOMBRETABLA +" (codigo INTEGER PRIMARY KEY AUTOINCREMENT, pregunta TEXT, categoria TEXT, respuestaCorrecta TEXT, respuestaInc1 TEXT, respuestaInc2 TEXT, respuestaInc3 TEXT, photo TEXT)";
 
     public PreguntaSQLiteHelper(Context contexto, String pregunta, CursorFactory factory, int version) {
         super(contexto, pregunta, factory, version);

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,6 +36,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -64,6 +67,7 @@ public class Anadir extends AppCompatActivity {
     private static final int REQUEST_SELECT_IMAGE = 201;
     final String pathFotos = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/demoAndroidImages/";
     private Uri uri;
+    private Bitmap bitmap;
 
 
 
@@ -96,19 +100,28 @@ public class Anadir extends AppCompatActivity {
         edtext3 = (EditText) findViewById(R.id.respuestaIncorrecta1);
         edtext4 = (EditText) findViewById(R.id.respuestaIncorrecta2);
         edtext5 = (EditText) findViewById(R.id.respuestaIncorrecta3);
+        ImageView photo = (ImageView)findViewById(R.id.imageView);
 
         editar = getIntent().getExtras().getBoolean(Constantes.EDITAR);
         codigo = getIntent().getExtras().getInt(Constantes.CODPREGUNTA);
-        edtext1.setText(getIntent().getExtras().getString(Constantes.ENUNCIADO));
-        spinner1.setSelection(categorias.indexOf(getIntent().getExtras().getString(Constantes.CATEGORIA)));
-        edtext2.setText(getIntent().getExtras().getString(Constantes.RESPCORRECTA));
-        edtext3.setText(getIntent().getExtras().getString(Constantes.RESPINCORRECTA1));
-        edtext4.setText(getIntent().getExtras().getString(Constantes.RESPINCORRECTA2));
-        edtext5.setText(getIntent().getExtras().getString(Constantes.RESPINCORRECTA3));
 
+        if(editar){
+
+            Pregunta p = Repositorio.buscarPregunta(codigo, myContext);
+
+            edtext1.setText(p.getEnunciado());
+            spinner1.setSelection(categorias.indexOf(Repositorio.getCategorias().indexOf(p.getCategoria())));
+            edtext2.setText(p.getPreguntaCorrecta());
+            edtext3.setText(p.getPreguntaInc1());
+            edtext4.setText(p.getPreguntaInc2());
+            edtext5.setText(p.getPreguntaInc3());
+            Mylog.d("nombre foto: ", p.getPhoto());
+            byte[] decodedString = Base64.decode(p.getPhoto(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            photo.setImageBitmap(decodedByte);
+        }
 
        button = (Button) findViewById(R.id.botoncat);
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +140,10 @@ public class Anadir extends AppCompatActivity {
                         .setPositiveButton(getResources().getString(R.string.add),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialogBox, int id) {
-                                        // Añade la categoria introducida al spinner
+                                        // Añade la categoria introducida al s
+                                        //
+                                        //
+                                        // inner
                                         categorias.add(dialogInput.getText().toString());
                                         // Eliminar posibles duplicados
                                         HashSet<String> quitarDuplicados = new HashSet<>(categorias);
@@ -179,59 +195,28 @@ public class Anadir extends AppCompatActivity {
                             .setAction("Action", null).show();
                 }else{
 
-                //Cuando esten todos los campos rellenados nos mostrará un alert preguntando que si aceptamos los permisos
+                    ImageView iv= findViewById(R.id.imageView);
+                    BitmapDrawable bmDr=(BitmapDrawable) iv.getDrawable();
+                    if (bmDr != null){
+                        bitmap=bmDr.getBitmap();
+                    }else{
+                        bitmap=null;
+                    }
 
-                    //AQUI ESTABA LOS PERMISOS
-                   /* myContext = Anadir.this;
-                    coordinatorLayout = findViewById(R.id.coordinatorLayout);
-                    bt.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            int WriteExternalStoragePermission = ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                            Log.d("AnadirActivity", "WRITE_EXTERNAL_STORAGE Permission: " + WriteExternalStoragePermission);
-
-                            if (WriteExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
-                                // Permiso denegado
-                                // A partir de Marshmallow (6.0) se pide aceptar o rechazar el permiso en tiempo de ejecución
-                                // En las versiones anteriores no es posible hacerlo
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                                    ActivityCompat.requestPermissions(Anadir.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, CODE_WRITE_EXTERNAL_STORAGE_PERMISSION);
-                                    // Una vez que se pide aceptar o rechazar el permiso se ejecuta el método "onRequestPermissionsResult" para manejar la respuesta
-                                    // Si el usuario marca "No preguntar más" no se volverá a mostrar este diálogo
-                                } else {
-                                    Snackbar.make(coordinatorLayout, getResources().getString(R.string.write_permiso_denegado), Snackbar.LENGTH_LONG)
-                                            .show();
-                                }
-                            } else {
-                                // Permiso aceptado
-                                Snackbar.make(coordinatorLayout, getResources().getString(R.string.write_permiso_aceptado), Snackbar.LENGTH_LONG)
-                                        .show();
-                            }
-
-                        }
-                    });*/
+                    Pregunta p = new Pregunta(edtext1.getText().toString(), spinner1.getSelectedItem().toString(), edtext2.getText().toString(), edtext3.getText().toString(), edtext4.getText().toString(), edtext5.getText().toString(), conversoraImagen64(bitmap));
 
                     //Hay un if que indica que si el editar es false insertara los datos nuevos.
                     if (editar==false) {
-
-
-                        Pregunta pregunta = new Pregunta(edtext1.getText().toString(), spinner1.getSelectedItem().toString(), edtext2.getText().toString(), edtext3.getText().toString(), edtext4.getText().toString(), edtext5.getText().toString());
-
-                        Repositorio.insertar(myContext, pregunta);
-
-                        finish();
+                        Repositorio.insertarF(p, myContext);
                     }else{
-
                         //Mientras que si los datos ya estan introducidos se editara los datos
-                        Pregunta pregunta = new Pregunta(edtext1.getText().toString(), spinner1.getSelectedItem().toString(), edtext2.getText().toString(), edtext3.getText().toString(), edtext4.getText().toString(), edtext5.getText().toString());
-
-                        pregunta.setCodigo(codigo);
-
-                        Repositorio.editarpregu(myContext, pregunta);
-
-                        finish();
+                        p.setCodigo(codigo);
+                        Repositorio.editarpregu(myContext, p);
+                        uri= null;
                     }
-                }
 
+                    finish();
+                }
             }
         });
 
@@ -319,6 +304,7 @@ public class Anadir extends AppCompatActivity {
                     Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     mediaScanIntent.setData(uri);
                     sendBroadcast(mediaScanIntent);
+
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     // Se borra el archivo temporal
                     File file = new File(uri.getPath());
@@ -342,11 +328,11 @@ public class Anadir extends AppCompatActivity {
                         }
 
                         // Se transformam los bytes de la imagen a un Bitmap
-                        Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+                         bitmap = BitmapFactory.decodeStream(imageStream);
 
                         // Se carga el Bitmap en el ImageView
                         ImageView imageView = findViewById(R.id.imageView);
-                        imageView.setImageBitmap(bmp);
+                        imageView.setImageBitmap(bitmap);
                     }
                 }
                 break;
@@ -360,6 +346,21 @@ public class Anadir extends AppCompatActivity {
         String date = dateFormat.format(new Date());
         // Se devuelve el código
         return "pic_" + date;
+    }
+
+    public static String conversoraImagen64(Bitmap bm){
+        String encodedImage="";
+        if(bm!=null) {
+            Bitmap resized = Bitmap.createScaledBitmap(bm, 500, 500, true);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            resized.compress(Bitmap.CompressFormat.JPEG, 100, baos);//bmisthebitmapobject
+            byte[] b = baos.toByteArray();
+            encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+            return encodedImage;
+        }else{
+            return encodedImage;
+        }
+
     }
 
     @Override

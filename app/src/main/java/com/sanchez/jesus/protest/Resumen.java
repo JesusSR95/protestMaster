@@ -22,6 +22,7 @@ import android.widget.TextView;
 public class Resumen extends AppCompatActivity {
     private static final String TAG="Resumen";
     final private int CODE_WRITE_EXTERNAL_STORAGE_PERMISSION = 123;
+    final private int CODE_CAMERA_PERMISSION = 1234;
     private Context myContext;
     private Button bt;
     CoordinatorLayout coordinatorLayout;
@@ -67,6 +68,7 @@ public class Resumen extends AppCompatActivity {
         setContentView(R.layout.activity_resumen);
         myContext = this;
         compruebaPermisos();
+        compruebaPermisosCamera();
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
     }
 
@@ -141,6 +143,28 @@ public class Resumen extends AppCompatActivity {
         }
     }
 
+    private void compruebaPermisosCamera(){
+        int CameraPermission = ContextCompat.checkSelfPermission(myContext, Manifest.permission.CAMERA);
+
+        if (CameraPermission != PackageManager.PERMISSION_GRANTED) {
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+
+                ActivityCompat.requestPermissions(Resumen.this, new String[] {Manifest.permission.CAMERA}, CODE_CAMERA_PERMISSION);
+
+            } else {
+
+                Mylog.e("Permisos: ","Rechazados");
+
+            }
+        } else {
+
+            Mylog.e("Permisos: ","Rechazados");
+        }
+
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -148,6 +172,17 @@ public class Resumen extends AppCompatActivity {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
 
+
+                } else {
+
+                    Mylog.e("Permisos: ","Rechazados");
+
+                }
+
+                break;
+
+            case CODE_CAMERA_PERMISSION:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 } else {
 

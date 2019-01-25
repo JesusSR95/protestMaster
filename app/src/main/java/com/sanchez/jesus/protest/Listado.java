@@ -92,12 +92,6 @@ public class Listado extends AppCompatActivity {
                     int position = recyclerView.getChildAdapterPosition(v);
                     Intent it = new Intent(Listado.this, Anadir.class);
                     it.putExtra(Constantes.CODPREGUNTA, lista2.get(position).getCodigo() );
-                    it.putExtra(Constantes.ENUNCIADO, lista2.get(position).getEnunciado() );
-                    it.putExtra(Constantes.CATEGORIA, lista2.get(position).getCategoria() );
-                    it.putExtra(Constantes.RESPCORRECTA, lista2.get(position).getPreguntaCorrecta() );
-                    it.putExtra(Constantes.RESPINCORRECTA1, lista2.get(position).getPreguntaInc1() );
-                    it.putExtra(Constantes.RESPINCORRECTA2, lista2.get(position).getPreguntaInc2() );
-                    it.putExtra(Constantes.RESPINCORRECTA3, lista2.get(position).getPreguntaInc3() );
                     it.putExtra(Constantes.EDITAR, true );
                     startActivity(it);
 
@@ -147,8 +141,9 @@ public class Listado extends AppCompatActivity {
                                                 String respuestaIncorrecta1 = lista2.get(position).getPreguntaInc1();
                                                 String respuestaIncorrecta2 = lista2.get(position).getPreguntaInc2();
                                                 String respuestaIncorrecta3 = lista2.get(position).getPreguntaInc3();
+                                                String photo = lista2.get(position).getPhoto();
 
-                                                Pregunta borrar = new Pregunta(codigo, enunciado, categoria, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3);
+                                                Pregunta borrar = new Pregunta(codigo, enunciado, categoria, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3, photo);
 
                                                 Repositorio.eliminaPregunta(borrar, myContext);
 
