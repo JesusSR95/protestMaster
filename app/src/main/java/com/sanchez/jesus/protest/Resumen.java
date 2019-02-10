@@ -4,7 +4,9 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -18,6 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileWriter;
 
 public class Resumen extends AppCompatActivity {
     private static final String TAG="Resumen";
@@ -55,6 +60,11 @@ public class Resumen extends AppCompatActivity {
                 Log.i("ActionBar", "AcercaDe");
                 Intent intent2 = new Intent(Resumen.this, AcercaDe.class);
                 startActivity(intent2);
+                return true;
+            case R.id.action_exportar:
+                Repositorio.recoger(myContext);
+                exportarXML();
+                Log.i("ActionBar", "Exportar");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -122,6 +132,40 @@ public class Resumen extends AppCompatActivity {
         Mylog.d(TAG, "Finalizando OnDestroy");
     }
 
+    private void exportarXML(){
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/preguntasExportar");
+        String fname = "preguntas.xml";
+        File file = new File (myDir, fname);
+        try
+        {
+            if (!myDir.exists()) {
+                myDir.mkdirs();
+            }
+            if (file.exists ())
+                file.delete ();
+            FileWriter fw=new FileWriter(file);
+            //Escribimos en el fichero un String
+            fw.write(Repositorio.CreateXMLString());
+            //Cierro el stream
+            fw.close();
+        }
+        catch (Exception ex)
+        {
+            Mylog.e("Ficheros", "Error al escribir fichero a memoria interna");
+        }
+        String cadena = myDir.getAbsolutePath()+"/"+fname;
+        Uri path = Uri.parse("file://"+cadena);
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto","ii.sho.hai@gmail.com", null));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Preguntas para plataforma Moodle");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Adjunto las preguntas");
+        emailIntent .putExtra(Intent.EXTRA_STREAM, path);
+        startActivity(Intent.createChooser(emailIntent, "Send email..."));
+    }
+
+
     private void compruebaPermisos() {
         int WriteExternalStoragePermission = ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         Mylog.d("MainActivity", "WRITE_EXTERNAL_STORAGE Permission: " + WriteExternalStoragePermission);
@@ -172,10 +216,9 @@ public class Resumen extends AppCompatActivity {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
 
-
                 } else {
 
-                    Mylog.e("Permisos: ","Rechazados");
+                    Mylog.e("Permisos: ", "Rechazados");
 
                 }
 
@@ -186,7 +229,7 @@ public class Resumen extends AppCompatActivity {
 
                 } else {
 
-                    Mylog.e("Permisos: ","Rechazados");
+                    Mylog.e("Permisos: ", "Rechazados");
 
                 }
 

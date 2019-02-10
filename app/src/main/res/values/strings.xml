@@ -44,4 +44,5 @@
     <string name="from_camera">Cargar imagen desde la cámara</string>
     <string name="choose_picture">Elige una imagen</string>
     <string name="error_files">Error creando archivos</string>
+    <string name="export">Exportar</string>
 </resources>

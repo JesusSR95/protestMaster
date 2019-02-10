@@ -42,4 +42,5 @@
     <string name="from_camera">Camera</string>
     <string name="choose_picture">Choose a picture</string>
     <string name="error_files">Error to create files</string>
+    <string name="export">Export</string>
 </resources>
