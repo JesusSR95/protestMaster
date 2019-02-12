@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -174,6 +178,59 @@ public class Listado extends AppCompatActivity {
         }
 
         Mylog.d(TAG, "Finalizando OnResume");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_listado, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_exportar:
+                Repositorio.recoger(myContext);
+                exportarXML();
+                Log.i("ActionBar", "Exportar");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    private void exportarXML(){
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/preguntasExportar");
+        String fname = "preguntas.xml";
+        File file = new File (myDir, fname);
+        try
+        {
+            if (!myDir.exists()) {
+                myDir.mkdirs();
+            }
+            if (file.exists ())
+                file.delete ();
+            FileWriter fw=new FileWriter(file);
+            //Escribimos en el fichero un String
+            fw.write(Repositorio.CreateXMLString());
+            //Cierro el stream
+            fw.close();
+        }
+        catch (Exception ex)
+        {
+            Mylog.e("Ficheros", "Error al escribir fichero a memoria interna");
+        }
+        String cadena = myDir.getAbsolutePath()+"/"+fname;
+        Uri path = Uri.parse("file://"+cadena);
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto","ii.sho.hai@gmail.com", null));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Preguntas para plataforma Moodle");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Preguntas de la app ProTest");
+        emailIntent .putExtra(Intent.EXTRA_STREAM, path);
+        startActivity(Intent.createChooser(emailIntent, "Send email..."));
     }
 
     @Override

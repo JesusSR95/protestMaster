@@ -61,11 +61,6 @@ public class Resumen extends AppCompatActivity {
                 Intent intent2 = new Intent(Resumen.this, AcercaDe.class);
                 startActivity(intent2);
                 return true;
-            case R.id.action_exportar:
-                Repositorio.recoger(myContext);
-                exportarXML();
-                Log.i("ActionBar", "Exportar");
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -132,38 +127,7 @@ public class Resumen extends AppCompatActivity {
         Mylog.d(TAG, "Finalizando OnDestroy");
     }
 
-    private void exportarXML(){
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/preguntasExportar");
-        String fname = "preguntas.xml";
-        File file = new File (myDir, fname);
-        try
-        {
-            if (!myDir.exists()) {
-                myDir.mkdirs();
-            }
-            if (file.exists ())
-                file.delete ();
-            FileWriter fw=new FileWriter(file);
-            //Escribimos en el fichero un String
-            fw.write(Repositorio.CreateXMLString());
-            //Cierro el stream
-            fw.close();
-        }
-        catch (Exception ex)
-        {
-            Mylog.e("Ficheros", "Error al escribir fichero a memoria interna");
-        }
-        String cadena = myDir.getAbsolutePath()+"/"+fname;
-        Uri path = Uri.parse("file://"+cadena);
 
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto","ii.sho.hai@gmail.com", null));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Preguntas para plataforma Moodle");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Adjunto las preguntas");
-        emailIntent .putExtra(Intent.EXTRA_STREAM, path);
-        startActivity(Intent.createChooser(emailIntent, "Send email..."));
-    }
 
 
     private void compruebaPermisos() {
