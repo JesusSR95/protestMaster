@@ -18,7 +18,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -34,6 +37,8 @@ public class Resumen extends AppCompatActivity {
     Repositorio repositorio;
     private TextView contarCategorias;
     private TextView pregunta;
+    ImageView imagenTrans;
+    Button botonTrans;
 
 
     @Override
@@ -75,6 +80,20 @@ public class Resumen extends AppCompatActivity {
         compruebaPermisos();
         compruebaPermisosCamera();
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
+        imagenTrans = (ImageView) findViewById(R.id.imagenTrans);
+        botonTrans = (Button) findViewById(R.id.botonTrans);
+
+        botonTrans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trans();
+            }
+        });
+    }
+
+    public void trans(){
+        Animation animacion = AnimationUtils.loadAnimation(this,R.anim.trans);
+        imagenTrans.startAnimation(animacion);
     }
 
     @Override

@@ -69,8 +69,6 @@ public class Repositorio {
             db.execSQL("INSERT INTO " + Constantes.NOMBRETABLA + " (pregunta, categoria, respuestaCorrecta, respuestaInc1, respuestaInc2, respuestaInc3, photo) " +
                     "VALUES ('" + pregunta.getEnunciado() + "', '" + pregunta.getCategoria() + "', '" + pregunta.getPreguntaCorrecta() + "', '" + pregunta.getPreguntaInc1() + "', '" + pregunta.getPreguntaInc2() + "', '" + pregunta.getPreguntaInc3() + pregunta.getPhoto()+"') ");
 
-
-            //Cerramos la base de datos
             db.close();
         }
     }
@@ -78,20 +76,14 @@ public class Repositorio {
     public static boolean insertarF(Pregunta p, Context myContext) {
 
         boolean valor = true;
-
-        //Abrimos la base de datos 'DBUsuarios' en modo escritura
         PreguntaSQLiteHelper psdbh =
                 new PreguntaSQLiteHelper(myContext, Constantes.NOMBREDB, null, 1);
 
         SQLiteDatabase db = psdbh.getWritableDatabase();
-
-        //Si hemos abierto correctamente la base de datos
         if (db != null) {
 
             db.execSQL("INSERT INTO '"+Constantes.NOMBRETABLA+"' (pregunta, categoria, respuestaCorrecta, respuestaInc1, respuestaInc2, respuestaInc3, photo)"+
                     "VALUES ('" + p.getEnunciado() + "', '" + p.getCategoria() + "', '"+ p.getPreguntaCorrecta()+"', '"+ p.getPreguntaInc1()+"', '"+p.getPreguntaInc2()+"', '"+p.getPreguntaInc3()+"','"+p.getPhoto()+"')");
-
-            //Cerramos la base de datos
             db.close();
         } else {
             valor = false;
