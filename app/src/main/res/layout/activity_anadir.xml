@@ -37,6 +37,16 @@
             android:layout_marginBottom="-25dp"
             android:background="@mipmap/ic_launcher" />
 
+
+        <Button
+            android:id="@+id/borrar_foto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="227dp"
+            android:text="@string/borrar_imagen" />
+
         <EditText
             android:id="@+id/PreguntaeditText"
             android:layout_width="wrap_content"

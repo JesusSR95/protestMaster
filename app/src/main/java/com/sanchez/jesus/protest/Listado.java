@@ -200,6 +200,7 @@ public class Listado extends AppCompatActivity {
 
     }
 
+    //Exportamos las preguntas al correo que hemos indicado
     private void exportarXML(){
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/preguntasExportar");
@@ -220,11 +221,11 @@ public class Listado extends AppCompatActivity {
         }
         catch (Exception ex)
         {
-            Mylog.e("Ficheros", "Error al escribir fichero a memoria interna");
+            Mylog.e("Ficheros", "Error al escribir");
         }
         String cadena = myDir.getAbsolutePath()+"/"+fname;
         Uri path = Uri.parse("file://"+cadena);
-
+    //Aqui se indica lel correo que se va a enviar las preguntas
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                 "mailto","ii.sho.hai@gmail.com", null));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Preguntas para plataforma Moodle");

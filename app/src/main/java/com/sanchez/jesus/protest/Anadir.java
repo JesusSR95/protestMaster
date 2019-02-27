@@ -58,6 +58,7 @@ public class Anadir extends AppCompatActivity {
     private Spinner spinner1;
     private Button bt;
     private Button button;
+    private Button borrarFoto;
     private boolean editar = false;
     private int codigo;
     private ArrayList<String> categorias = new ArrayList<>();
@@ -100,22 +101,21 @@ public class Anadir extends AppCompatActivity {
         edtext3 = (EditText) findViewById(R.id.respuestaIncorrecta1);
         edtext4 = (EditText) findViewById(R.id.respuestaIncorrecta2);
         edtext5 = (EditText) findViewById(R.id.respuestaIncorrecta3);
-        ImageView photo = (ImageView)findViewById(R.id.imageView);
+        final ImageView photo = (ImageView)findViewById(R.id.imageView);
 
+        borrarFoto = (Button) findViewById(R.id.borrar_foto);
         editar = getIntent().getExtras().getBoolean(Constantes.EDITAR);
         codigo = getIntent().getExtras().getInt(Constantes.CODPREGUNTA);
 
         if(editar){
-
             Pregunta p = Repositorio.buscarPregunta(codigo, myContext);
-
             edtext1.setText(p.getEnunciado());
             spinner1.setSelection(categorias.indexOf(Repositorio.getCategorias().indexOf(p.getCategoria())));
             edtext2.setText(p.getPreguntaCorrecta());
             edtext3.setText(p.getPreguntaInc1());
             edtext4.setText(p.getPreguntaInc2());
             edtext5.setText(p.getPreguntaInc3());
-            Mylog.d("nombre foto: ", p.getPhoto());
+            Mylog.d("foto: ", p.getPhoto());
             byte[] decodedString = Base64.decode(p.getPhoto(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             photo.setImageBitmap(decodedByte);
@@ -207,7 +207,7 @@ public class Anadir extends AppCompatActivity {
 
                     //Hay un if que indica que si el editar es false insertara los datos nuevos.
                     if (editar==false) {
-                        Repositorio.insertarF(p, myContext);
+                        Repositorio.insertarFoto(p, myContext);
                     }else{
                         //Mientras que si los datos ya estan introducidos se editara los datos
                         p.setCodigo(codigo);
@@ -217,6 +217,14 @@ public class Anadir extends AppCompatActivity {
 
                     finish();
                 }
+            }
+        });
+
+        //boton que al pulsarlo borre la foto que anteriormente hemos agregado a la pregunta
+        borrarFoto.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick (View view){
+                photo.setImageDrawable(null);
             }
         });
 
@@ -243,7 +251,7 @@ public class Anadir extends AppCompatActivity {
             }
         });
 }
-
+    //Metodo que realiza la foto
     private void takePicture() {
         try {
             // Se crea el directorio para las fotografías
@@ -280,6 +288,8 @@ public class Anadir extends AppCompatActivity {
         }
     }
 
+
+    //metodo que recoge una imagen de la galeria
     private void selectPicture(){
         // Se le pide al sistema una imagen del dispositivo
         Intent intent = new Intent();
